@@ -1,13 +1,15 @@
-// webpack.config.js
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
-    entry: path.resolve('./server/server.js'), /* ไฟล์เซิฟเวอร์ที่เราจะแปลงจาก JSX เป็น Javascript ธรรมดา */
+    entry: path.resolve('./src/js/entry.js'), 
     output: {
-      path: path.resolve('./server'), /* ที่อยู่ไฟล์ที่เราแปลงเสร็จแล้ว */ 
-      filename: 'server.build.js', /* ไฟล์ที่แปลงแล้ว */
+      path: path.resolve('./static/js'), 
+      filename: 'server.build.js', 
     },
+    plugins: [new MiniCssExtractPlugin()],
     module: {
-      rules: [ /* ตัว loader ทั้งหลาย*/
+      rules: [ 
         {
           test: /\.js/,
           exclude: /node_module/,
@@ -15,7 +17,11 @@ module.exports = {
             'babel-loader',
           ],
         },
+        {
+          test: /\.css$/i,
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        },
       ],
     },
-    target:'node', /* ตัวนี้ใส่มาเพื่อให้เราสามารถใช้ express ได้ */
+    target:'node', 
   }
