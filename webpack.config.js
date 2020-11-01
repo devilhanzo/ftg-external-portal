@@ -1,26 +1,33 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: path.resolve('./src/js/entry.js'), 
+    entry: path.resolve('./src/index.js'), 
     output: {
-      path: path.resolve('./static/js'), 
-      filename: 'server.build.js', 
+      path: path.resolve(__dirname, 'static/'), 
+      filename: './js/server.build.js', 
     },
-    plugins: [new MiniCssExtractPlugin()],
+    plugins: [],
     module: {
       rules: [ 
         {
           test: /\.js/,
           exclude: /node_module/,
-          loaders: [
+          use: [
             'babel-loader',
           ],
         },
         {
-          test: /\.css$/i,
-          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+          test: /\.css$/,
+          use: ['style-loader','css-loader']
         },
+        {
+          test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+          }
+        }
       ],
     },
     target:'node', 
