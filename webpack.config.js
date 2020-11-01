@@ -1,34 +1,121 @@
+// const HtmlWebPackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack');
 const path = require('path');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const extractSass = new ExtractTextPlugin({
+  filename: './css/[name].css',
+  disable: process.env.NODE_ENV === 'development',
+});
 module.exports = {
-    entry: path.resolve('./src/index.js'), 
-    output: {
-      path: path.resolve(__dirname, 'static/'), 
-      filename: './js/server.build.js', 
-    },
-    plugins: [],
-    module: {
-      rules: [ 
-        {
-          test: /\.js/,
-          exclude: /node_module/,
+  // mode: 'production',
+  entry: { app: './src/index.js' },
+  output: {
+    path: path.resolve(__dirname, 'static/'),
+    filename: './js/[name].js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+      // {
+      //   test: /\.(png|svg|jpg|gif)$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //       options: {
+      //         // name: "./images/[name].[hash].[ext]",
+      //         name: '[path][name]-[hash:8].[ext]',
+      //       },
+      //     },
+      //     {
+      //       loader: 'image-webpack-loader',
+      //       options: {
+      //         mozjpeg: {
+      //           progressive: true,
+      //           quality: 65,
+      //         },
+      //         // optipng.enabled: false will disable optipng
+      //         optipng: {
+      //           enabled: false,
+      //         },
+      //         pngquant: {
+      //           quality: [0.65, 0.90],
+      //           speed: 4,
+      //         },
+      //         gifsicle: {
+      //           interlaced: false,
+      //         },
+      //         // the webp option will enable WEBP
+      //         webp: {
+      //           quality: 75,
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
+      // {
+      //   test: /\.html$/,
+      //   use: [
+      //     {
+      //       loader: 'html-loader',
+      //       options: { minimize: true },
+      //     },
+      //   ],
+      // },
+      {
+        test: /\.scss$/,
+        use: extractSass.extract({
           use: [
-            'babel-loader',
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'sass-loader',
+            },
           ],
+          // use style-loader in development
+          fallback: 'style-loader',
+        }),
+      },
+      {
+        test: /\.css$/,
+        use: extractSass.extract({
+          fallback: 'style-loader',
+          use: 'css-loader',
+        }),
+      },
+    ],
+  },
+  // devServer: {
+  //   contentBase: './dist',
+  //   hot: true,
+  // },
+  plugins: [
+    extractSass,
+    // new ExtractTextPlugin('[name].[hash].css'),
+    // new HtmlWebPackPlugin({
+    //   template: './src/index.html',
+    //   filename: './index.html',
+    // }),
+    // new CleanWebpackPlugin(),
+    // new webpack.NamedModulesPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
         },
-        {
-          test: /\.css$/,
-          use: ['style-loader','css-loader']
-        },
-        {
-          test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-          }
-        }
-      ],
+      },
     },
-    target:'node', 
-  }
+  },
+};
