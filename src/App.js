@@ -7,8 +7,10 @@ import { Portal } from './Portal';
 import { NoMatch } from './NoMatch';
 import { Layout } from './components/Layout';
 import { NavigationBar } from './components/NavigationBar';
+import { Footer } from './components/Footer';
 import { Jumbotron } from './components/Jumbotron';
-// import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css'
+
 
 class App extends Component {
   render() {
@@ -26,8 +28,10 @@ class App extends Component {
               <Route component={NoMatch} />
             </Switch>
           </Layout>
+          <Footer/>
         </Router>
       </React.Fragment>
+
     );
   }
 }
