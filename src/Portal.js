@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap'
 import { AuthenInput } from './components/AuthenInput'
 import getAllUrlParams from './utils/urlparams'
+import { setLoginInputError, clearLoginInputError, loginUsernameInputChange, loginPasswordInputChange } from './actions';
+import { useSelector,useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
 
 const Styles = styled.div`
 
@@ -39,25 +42,12 @@ const Styles = styled.div`
 }
 `;
 
-var params = document.getElementById('params');
-var results = document.getElementById('results');
-
-// document.querySelector('input').addEventListener('keyup', function() {
-//   params.innerText = this.value;
-//   results.innerText = JSON.stringify(getAllUrlParams("http://test.com/?" + this.value), null, 2);
-// });
+const userAPI = '/api/login';
 
 
 export class Portal extends React.Component {
-  state = {
-    username: "",
-    password: ""
-  }
+  
 
-  handleChange = (e) => {
-      console.log(e.target.value);
-      this.setState({username: e.target.value})
-  }
   static propTypes = {
     // loginError: PropTypes.shape({
     //   inputError: PropTypes.string,
@@ -72,8 +62,13 @@ export class Portal extends React.Component {
     loginUsernameInputChange: PropTypes.func.isRequired,
     loginPasswordInputChange: PropTypes.func.isRequired,
   }
+
   constructor(props) {
     super(props);
+    this.state = {
+        username : '',
+        password : '',
+    }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.doLogin = this.doLogin.bind(this);
     this.handleForgetPassword = this.handleForgetPassword.bind(this);
@@ -89,13 +84,12 @@ export class Portal extends React.Component {
     const value = target.value;
     const name = target.name;
     switch (name) {
-      case 'username' : this.props.loginUsernameInputChange(value);
+      case 'username' :  this.setState({username:value}); 
       break;
-      case 'password' : this.props.loginPasswordInputChange(value);
+      case 'password' : this.setState({password:value});
       break;
       default:
     }
-    console.log(this.props.usernameInput);
   }
 
   handleForgetPassword(event) {
@@ -105,12 +99,16 @@ export class Portal extends React.Component {
   doLogin(event) {
     event.preventDefault(); // Don't refresh onSubmit action
     // Clear Error
-    this.props.clearLoginInputError();
+  // this.props.clearLoginInputError();
     // TODO add loading animate button
     const details = {
-      username: this.props.usernameInput,
-      password: this.props.passwordInput,
+      username: this.state.username,
+      password: this.state.password,
     };
+    console.log("Submited authForm");
+    console.log("username "+ details.username);
+    console.log("password "+ details.password);
+
     fetch(userAPI, {
       method: 'POST',
       headers: {
@@ -142,19 +140,52 @@ export class Portal extends React.Component {
   render() {
     return(
       <Styles>
-        <Form className="form-signin" >
+        <Form name="authForm" className="form-signin" method="POST" onSubmit={this.doLogin} >
       {/* <img class="mb-4" src="/static/assets/kkh-logo.png" alt="" width="100%" height="100%" /> */}
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in{this.props.usernameInput},{this.props.passwordInput}</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
           <label for="username" class="sr-only">Username</label>
-          <AuthenInput className="form-control" placeholder="Username" type="text" id="username" onChange={this.handleChange}/>
+          <AuthenInput 
+              className="form-control" 
+              placeholder="Username" 
+              type="text" 
+              id="register-username"
+              label="Username"
+              name="username" 
+              onChange={this.handleInputChange}/>
           <label for="password" class="sr-only">Password</label>
-          <AuthenInput className="form-control" placeholder="Password" type="password" id="password" onChange={this.handleInputChange} />
+          <AuthenInput 
+              className="form-control" 
+              placeholder="Password" 
+              type="password" 
+              id="register-password" 
+              label="Password"
+              name="password"
+              onChange={this.handleInputChange} />
           <Button className="btn btn-lg btn-primary btn-block" type="submit">
             Login
           </Button>
-        <label >{this.state.username}</label>
+    <label>{this.state.username}</label>
         </Form>
       </Styles>
     )
   }
 }
+
+// const mapStateToProps = state => ({
+//   loginInputError: state.loginError.inputError,
+//   loginInputErrorMessage: state.loginError.inputErrorMessage,
+//   usernameInput: state.usernameInput,
+//   passwordInput: state.passwordInput,
+// });
+
+// const mapDispatchToProps = {
+//   setLoginInputError,
+//   clearLoginInputError,
+//   loginUsernameInputChange,
+//   loginPasswordInputChange,
+// };
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Portal);

@@ -2,7 +2,7 @@
  * @Author: puck.solo 
  * @Date: 2017-10-11 00:02:10 
  * @Last Modified by: puck.solo
- * @Last Modified time: 2017-10-20 12:56:38
+ * @Last Modified time: 2020-11-02 22:57:56
  */
 // Redux Action
 export const setGlobalErrorMessage = errorMessage => ({
