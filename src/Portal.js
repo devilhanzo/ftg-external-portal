@@ -67,9 +67,9 @@ export class Portal extends React.Component {
         username : '',
         password : '',
     }
-    // this.handleInputChange = this.handleInputChange.bind(this);
-    // this.doLogin = this.doLogin.bind(this);
-    // this.handleForgetPassword = this.handleForgetPassword.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.doLogin = this.doLogin.bind(this);
+    this.handleForgetPassword = this.handleForgetPassword.bind(this);
   }
 
   componentDidMount() {
