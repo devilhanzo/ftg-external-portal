@@ -30,7 +30,7 @@ export const Jumbotron = () => (
       <div className="overlay"></div>
       <Container>
         <h1>Welcome</h1>
-        <p>Learn to code from my YouTube videos</p>
+        <p>Please identify yourself to use Internet.</p>
       </Container>
     </Jumbo>
   </Styles>

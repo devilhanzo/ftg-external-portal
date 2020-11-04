@@ -1,12 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap'
 import { AuthenInput } from './components/AuthenInput'
 import getAllUrlParams from './utils/urlparams'
 import { setLoginInputError, clearLoginInputError, loginUsernameInputChange, loginPasswordInputChange } from './actions';
 import { useSelector,useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
 
 const Styles = styled.div`
 
@@ -46,20 +45,20 @@ const Styles = styled.div`
 export class Portal extends React.Component {
   
 
-  static propTypes = {
-    // loginError: PropTypes.shape({
-    //   inputError: PropTypes.string,
-    //   inputErrorMessage: PropTypes.string,
-    // }),
-    loginInputError: PropTypes.string,
-    loginInputErrorMessage: PropTypes.string,
-    usernameInput: PropTypes.string,
-    passwordInput: PropTypes.string,
-    setLoginInputError: PropTypes.func.isRequired,
-    clearLoginInputError: PropTypes.func.isRequired,
-    loginUsernameInputChange: PropTypes.func.isRequired,
-    loginPasswordInputChange: PropTypes.func.isRequired,
-  }
+  // static propTypes = {
+  //   // loginError: PropTypes.shape({
+  //   //   inputError: PropTypes.string,
+  //   //   inputErrorMessage: PropTypes.string,
+  //   // }),
+  //   loginInputError: PropTypes.string,
+  //   loginInputErrorMessage: PropTypes.string,
+  //   usernameInput: PropTypes.string,
+  //   passwordInput: PropTypes.string,
+  //   setLoginInputError: PropTypes.func.isRequired,
+  //   clearLoginInputError: PropTypes.func.isRequired,
+  //   loginUsernameInputChange: PropTypes.func.isRequired,
+  //   loginPasswordInputChange: PropTypes.func.isRequired,
+  // }
 
   constructor(props) {
     super(props);
@@ -99,7 +98,7 @@ export class Portal extends React.Component {
     // Clear Error
   // this.props.clearLoginInputError();
     // TODO add loading animate button
-
+    const formBody = require('./utils/FormBody');
     const params = getAllUrlParams(window.location.href);
     const ftgAPI = params.post;
     const details = {
@@ -118,8 +117,9 @@ export class Portal extends React.Component {
     fetch(ftgAPI, {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
+        // Accept: 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
+        'cache-control': 'no-cache'
         // authorization: `Bearer ${token}`,
       },
       body: formBody(details),
