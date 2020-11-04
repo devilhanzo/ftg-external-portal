@@ -6,8 +6,6 @@ import getAllUrlParams from './utils/urlparams'
 // import { setLoginInputError, clearLoginInputError, loginUsernameInputChange, loginPasswordInputChange } from './actions';
 // import { useSelector,useDispatch } from 'react-redux';
 import styled from 'styled-components';
-const https = require('https')
-const querystring = require('querystring')
 const Styles = styled.div`
 
 .form-signin {
@@ -44,7 +42,7 @@ const Styles = styled.div`
 
 
 export class Portal extends React.Component {
-  
+
 
   // static propTypes = {
   //   // loginError: PropTypes.shape({
@@ -64,8 +62,8 @@ export class Portal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        username : '',
-        password : '',
+      username: '',
+      password: '',
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.doLogin = this.doLogin.bind(this);
@@ -82,10 +80,10 @@ export class Portal extends React.Component {
     const value = target.value;
     const name = target.name;
     switch (name) {
-      case 'username' :  this.setState({username:value}); 
-      break;
-      case 'password' : this.setState({password:value});
-      break;
+      case 'username': this.setState({ username: value });
+        break;
+      case 'password': this.setState({ password: value });
+        break;
       default:
     }
   }
@@ -96,47 +94,36 @@ export class Portal extends React.Component {
 
   doLogin(event) {
     event.preventDefault(); // Don't refresh onSubmit action
+
+    // const RADIUS = require('isc-radius');
+
+    // let client = new RADIUS.Client({ host: '10.0.3.254', secret: '@secret123' });
+
+    // client.request('Acct-Status-Type=Start,Framed-Ip-Address=10.0.3.200,User-Name=puck,Acct-Session-Id=0311a4ff,Class=unlimited,Calling-Station-Id=puck')
+    //   .then(function (p) {
+    //     console.log('-- response --');
+    //     console.log(p);
+    //   }).catch(function (e) {
+    //     console.error(e);
+    //   });
+
+
     // Clear Error
-  // this.props.clearLoginInputError();
+    // this.props.clearLoginInputError();
     // TODO add loading animate button
-  //  const formBody = require('./utils/FormBody');
-    const params = getAllUrlParams(window.location.href);
-    const ftgAPI = params.post;
+    //  const formBody = require('./utils/FormBody');
+    // const params = getAllUrlParams(window.location.href);
+    // const ftgAPI = params.post;
 
 
-    const data = querystring.stringify({
-      username: this.state.username,
-      password: this.state.password,
-      magic: params.magic,
-      Submit: 'Login',
-    })
-    
-    const options = {
-      hostname: 'gateway.kkh.go.th',
-      port: 443,
-      path: '/fgtauth',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'cache-control': 'no-cache',
-        'Access-Control-Allow-Origin' : '*',
-      }
-    }
-    
-    const req = https.request(options, res => {
-      console.log(`statusCode: ${res.statusCode}`)
-    
-      res.on('data', d => {
-        process.stdout.write(d)
-      })
-    })
-    
-    req.on('error', error => {
-      console.error(error)
-    })
-    
-    req.write(data)
-    req.end()
+    // const data = querystring.stringify({
+    //   username: this.state.username,
+    //   password: this.state.password,
+    //   magic: params.magic,
+    //   Submit: 'Login',
+    // })
+
+
 
 
     // const details = {
@@ -184,29 +171,29 @@ export class Portal extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <Styles>
         <Form name="authForm" className="form-signin" method="POST" onSubmit={this.doLogin} >
-      {/* <img class="mb-4" src="/static/assets/kkh-logo.png" alt="" width="100%" height="100%" /> */}
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+          {/* <img class="mb-4" src="/static/assets/kkh-logo.png" alt="" width="100%" height="100%" /> */}
+          <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
           <label for="username" class="sr-only">Username</label>
-          <AuthenInput 
-              className="form-control" 
-              placeholder="Username" 
-              type="text" 
-              id="register-username"
-              label="Username"
-              name="username" 
-              onChange={this.handleInputChange}/>
+          <AuthenInput
+            className="form-control"
+            placeholder="Username"
+            type="text"
+            id="register-username"
+            label="Username"
+            name="username"
+            onChange={this.handleInputChange} />
           <label for="password" class="sr-only">Password</label>
-          <AuthenInput 
-              className="form-control" 
-              placeholder="Password" 
-              type="password" 
-              id="register-password" 
-              label="Password"
-              name="password"
-              onChange={this.handleInputChange} />
+          <AuthenInput
+            className="form-control"
+            placeholder="Password"
+            type="password"
+            id="register-password"
+            label="Password"
+            name="password"
+            onChange={this.handleInputChange} />
           <Button className="btn btn-lg btn-primary btn-block" type="submit">
             Login
           </Button>
