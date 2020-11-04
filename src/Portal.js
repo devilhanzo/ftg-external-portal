@@ -118,7 +118,8 @@ export class Portal extends React.Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'cache-control': 'no-cache'
+        'cache-control': 'no-cache',
+        'Access-Control-Allow-Origin' : '*',
       }
     }
     
