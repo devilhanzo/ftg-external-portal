@@ -3,10 +3,11 @@ import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { AuthenInput } from './components/AuthenInput'
 import getAllUrlParams from './utils/urlparams'
-import { setLoginInputError, clearLoginInputError, loginUsernameInputChange, loginPasswordInputChange } from './actions';
-import { useSelector,useDispatch } from 'react-redux';
+// import { setLoginInputError, clearLoginInputError, loginUsernameInputChange, loginPasswordInputChange } from './actions';
+// import { useSelector,useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
+const https = require('https')
+const querystring = require('querystring')
 const Styles = styled.div`
 
 .form-signin {
@@ -66,9 +67,9 @@ export class Portal extends React.Component {
         username : '',
         password : '',
     }
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.doLogin = this.doLogin.bind(this);
-    this.handleForgetPassword = this.handleForgetPassword.bind(this);
+    // this.handleInputChange = this.handleInputChange.bind(this);
+    // this.doLogin = this.doLogin.bind(this);
+    // this.handleForgetPassword = this.handleForgetPassword.bind(this);
   }
 
   componentDidMount() {
@@ -98,50 +99,87 @@ export class Portal extends React.Component {
     // Clear Error
   // this.props.clearLoginInputError();
     // TODO add loading animate button
-    const formBody = require('./utils/FormBody');
+  //  const formBody = require('./utils/FormBody');
     const params = getAllUrlParams(window.location.href);
     const ftgAPI = params.post;
-    const details = {
+
+
+    const data = querystring.stringify({
       username: this.state.username,
       password: this.state.password,
       magic: params.magic,
-    };
-    console.log("Submited authForm");
-    console.log("username "+ details.username);
-    console.log("password "+ details.password);
-    console.log("post "+ ftgAPI);
-    console.log("magic "+ params.magic);
+      Submit: 'Login',
+    })
+    
+    const options = {
+      hostname: 'gateway.kkh.go.th',
+      port: 443,
+      path: '/fgtauth',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'cache-control': 'no-cache'
+      }
+    }
+    
+    const req = https.request(options, res => {
+      console.log(`statusCode: ${res.statusCode}`)
+    
+      res.on('data', d => {
+        process.stdout.write(d)
+      })
+    })
+    
+    req.on('error', error => {
+      console.error(error)
+    })
+    
+    req.write(data)
+    req.end()
+
+
+    // const details = {
+    //   username: this.state.username,
+    //   password: this.state.password,
+    //   magic: params.magic,
+    //   Submit: 'Login',
+    // };
+    // console.log("Submited authForm");
+    // console.log("username "+ details.username);
+    // console.log("password "+ details.password);
+    // console.log("post "+ ftgAPI);
+    // console.log("magic "+ params.magic);
     // console.log("isPost "+ (params.post !== undefined)?true:false);
     // console.log("isLogin")+ (params.login);
 
-    fetch(ftgAPI, {
-      method: 'POST',
-      headers: {
-        // Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'cache-control': 'no-cache'
-        // authorization: `Bearer ${token}`,
-      },
-      body: formBody(details),
-    })
-      .then((response) => {
-        if (response.ok) {
-          response.json().then((data) => {
-            // if (!data.ok) { // New Error
-            //   this.props.setLoginInputError({
-            //     inputError: data.component.name,
-            //     inputErrorMessage: data.component.message,
-            //   });
-            // }
-            // if (data.ok) {
-            //   localStorage.setItem('token', data.token);
-            //   document.authForm.submit(); // Submit form
-            // }
-            console.log(data);
-          });
-        }
-      })
-      .catch(err => console.log(err));
+    // fetch(ftgAPI, {
+    //   method: 'POST',
+    //   headers: {
+    //     // Accept: 'application/json',
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'cache-control': 'no-cache'
+    //     // authorization: `Bearer ${token}`,
+    //   },
+    //   body: formBody(details),
+    // })
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       response.json().then((data) => {
+    //         // if (!data.ok) { // New Error
+    //         //   this.props.setLoginInputError({
+    //         //     inputError: data.component.name,
+    //         //     inputErrorMessage: data.component.message,
+    //         //   });
+    //         // }
+    //         // if (data.ok) {
+    //         //   localStorage.setItem('token', data.token);
+    //         //   document.authForm.submit(); // Submit form
+    //         // }
+    //         console.log(data);
+    //       });
+    //     }
+    //   })
+    //   .catch(err => console.log(err));
   }
 
   render() {
