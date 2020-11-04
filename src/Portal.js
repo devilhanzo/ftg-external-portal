@@ -42,8 +42,6 @@ const Styles = styled.div`
 }
 `;
 
-const userAPI = '/api/login';
-
 
 export class Portal extends React.Component {
   
@@ -101,36 +99,45 @@ export class Portal extends React.Component {
     // Clear Error
   // this.props.clearLoginInputError();
     // TODO add loading animate button
+
+    const params = getAllUrlParams(window.location.href);
+    const ftgAPI = params.post;
     const details = {
       username: this.state.username,
       password: this.state.password,
+      magic: params.magic,
     };
     console.log("Submited authForm");
     console.log("username "+ details.username);
     console.log("password "+ details.password);
+    console.log("post "+ ftgAPI);
+    console.log("magic "+ params.magic);
+    // console.log("isPost "+ (params.post !== undefined)?true:false);
+    // console.log("isLogin")+ (params.login);
 
-    fetch(userAPI, {
+    fetch(ftgAPI, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
-        authorization: `Bearer ${token}`,
+        // authorization: `Bearer ${token}`,
       },
       body: formBody(details),
     })
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {
-            if (!data.ok) { // New Error
-              this.props.setLoginInputError({
-                inputError: data.component.name,
-                inputErrorMessage: data.component.message,
-              });
-            }
-            if (data.ok) {
-              localStorage.setItem('token', data.token);
-              document.authForm.submit(); // Submit form
-            }
+            // if (!data.ok) { // New Error
+            //   this.props.setLoginInputError({
+            //     inputError: data.component.name,
+            //     inputErrorMessage: data.component.message,
+            //   });
+            // }
+            // if (data.ok) {
+            //   localStorage.setItem('token', data.token);
+            //   document.authForm.submit(); // Submit form
+            // }
+            console.log(data);
           });
         }
       })
@@ -164,7 +171,6 @@ export class Portal extends React.Component {
           <Button className="btn btn-lg btn-primary btn-block" type="submit">
             Login
           </Button>
-    <label>{this.state.username}</label>
         </Form>
       </Styles>
     )
