@@ -7,7 +7,7 @@ const app = express();
 app.use(
     '/fgtauth',
     createProxyMiddleware({
-      target: 'http://10.99.0.49:50453/ip/hotspot/active',
+      target: 'http://gateway.kkh.go.th:1001',
       changeOrigin: true,
     })
   );
