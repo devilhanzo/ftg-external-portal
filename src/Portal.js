@@ -5,8 +5,9 @@ import { AuthenInput } from './components/AuthenInput'
 import getAllUrlParams from './utils/urlparams'
 // import { setLoginInputError, clearLoginInputError, loginUsernameInputChange, loginPasswordInputChange } from './actions';
 // import { useSelector,useDispatch } from 'react-redux';
-import styled from 'styled-components';
+import styled from 'styled-components'
 const axios = require('axios')
+const qs = require('querystring')
 const Styles = styled.div`
 
 .form-signin {
@@ -61,14 +62,14 @@ export class Portal extends React.Component {
   // }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       username: '',
       password: '',
     }
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this)
     this.doLogin = this.doLogin.bind(this);
-    this.handleForgetPassword = this.handleForgetPassword.bind(this);
+    this.handleForgetPassword = this.handleForgetPassword.bind(this)
   }
 
   componentDidMount() {
@@ -77,26 +78,26 @@ export class Portal extends React.Component {
   }
 
   handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+    const target = event.target
+    const value = target.value
+    const name = target.name
     switch (name) {
-      case 'username': this.setState({ username: value });
-        break;
-      case 'password': this.setState({ password: value });
-        break;
+      case 'username': this.setState({ username: value })
+        break
+      case 'password': this.setState({ password: value })
+        break
       default:
     }
   }
 
   handleForgetPassword(event) {
-    this.props.history.push('/password');
+    this.props.history.push('/password')
   }
 
   doLogin(event) {
     event.preventDefault(); // Don't refresh onSubmit action
-    const params = getAllUrlParams(window.location.href);
-    const url = params.post;
+    const params = getAllUrlParams(window.location.href)
+    const url = params.post
     const requestBody = {
       username: this.state.username,
       password: this.state.password,
