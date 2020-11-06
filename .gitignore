@@ -25,5 +25,6 @@ yarn-error.log*
 .LICENSE.txt
 /dist
 /certs
-.crt
-.key
+STAR_kkh_go_th_ca.crt
+STAR_kkh_go_th.crt
+kkh.go.th.key

@@ -94,18 +94,26 @@ export class Portal extends React.Component {
 
   doLogin(event) {
     event.preventDefault(); // Don't refresh onSubmit action
+    const params = getAllUrlParams(window.location.href);
+    const requestBody = {
+      username: this.state.username,
+      password: this.state.password,
+      magic: params.magic,
+    }
 
-    // const RADIUS = require('isc-radius');
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
 
-    // let client = new RADIUS.Client({ host: '10.0.3.254', secret: '@secret123' });
-
-    // client.request('Acct-Status-Type=Start,Framed-Ip-Address=10.0.3.200,User-Name=puck,Acct-Session-Id=0311a4ff,Class=unlimited,Calling-Station-Id=puck')
-    //   .then(function (p) {
-    //     console.log('-- response --');
-    //     console.log(p);
-    //   }).catch(function (e) {
-    //     console.error(e);
-    //   });
+    axios.post(url, qs.stringify(requestBody), config)
+      .then((result) => {
+        console.log(result)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
 
 
     // Clear Error
