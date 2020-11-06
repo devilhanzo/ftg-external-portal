@@ -206,6 +206,7 @@ export class Portal extends React.Component {
             label="Password"
             name="password"
             onChange={this.handleInputChange} />
+            <input type="hidden" name="ref_path" value={'https://gateway.kkh.go.th:1003/fgtauth'} />
           <Button className="btn btn-lg btn-primary btn-block" type="submit">
             Login
           </Button>
