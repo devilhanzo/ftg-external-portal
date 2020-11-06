@@ -107,7 +107,6 @@ export class Portal extends React.Component {
     const config = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'cache-control': 'no-cache'
       }
     }
 
