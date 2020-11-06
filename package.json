@@ -11,6 +11,7 @@
     "bootstrap": "^4.4.1",
     "dgram": "^1.0.1",
     "express": "^4.17.1",
+    "express-request-proxy": "^2.2.2",
     "fs": "0.0.1-security",
     "http-proxy-middleware": "^1.0.6",
     "isc-radius": "^0.2.1",
