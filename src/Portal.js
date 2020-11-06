@@ -98,7 +98,7 @@ export class Portal extends React.Component {
     event.preventDefault(); // Don't refresh onSubmit action
     const params = getAllUrlParams(window.location.href)
     // const url = params.post
-    const url = '/ftgauth'
+    const url = '/fgtauth'
     const requestBody = {
       username: this.state.username,
       password: this.state.password,
