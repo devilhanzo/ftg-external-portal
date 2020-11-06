@@ -6,6 +6,7 @@ import getAllUrlParams from './utils/urlparams'
 // import { setLoginInputError, clearLoginInputError, loginUsernameInputChange, loginPasswordInputChange } from './actions';
 // import { useSelector,useDispatch } from 'react-redux';
 import styled from 'styled-components';
+const axios = require('axios')
 const Styles = styled.div`
 
 .form-signin {
