@@ -7,7 +7,7 @@ const app = express();
 app.use(
     '/ftgauth',
     createProxyMiddleware({
-      target: 'https://gateway.kkh.go.th:1003/ftgauth',
+      target: 'http://gateway.kkh.go.th:1003/fgtauth',
       changeOrigin: true,
     })
   );
