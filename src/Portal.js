@@ -97,8 +97,7 @@ export class Portal extends React.Component {
   doLogin(event) {
     event.preventDefault(); // Don't refresh onSubmit action
     const params = getAllUrlParams(window.location.href)
-    //const url = params.post
-    const url = 'http://gateway.kkh.go.th:1003/fgtauth'
+    const url = params.post
     const requestBody = {
       username: this.state.username,
       password: this.state.password,
@@ -107,7 +106,8 @@ export class Portal extends React.Component {
 
     const config = {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'cache-control': 'no-cache'
       }
     }
 
