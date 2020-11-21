@@ -118,7 +118,7 @@ export class Portal extends React.Component {
       .catch((err) => {
         console.log(err)
       })
-      document.authForm.submit();
+    //  document.authForm.submit();
 
     // Clear Error
     // this.props.clearLoginInputError();
@@ -185,7 +185,7 @@ export class Portal extends React.Component {
   render() {
     return (
       <Styles>
-        <Form name="authForm" className="form-signin" method="POST" onSubmit={this.doLogin} action={'https://gateway.kkh.go.th:1003/fgtauth'}>
+        <Form name="authForm" className="form-signin"  onSubmit={this.doLogin} >
           {/* <img class="mb-4" src="/static/assets/kkh-logo.png" alt="" width="100%" height="100%" /> */}
           <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
           <label for="username" class="sr-only">Username</label>
