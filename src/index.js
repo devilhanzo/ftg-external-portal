@@ -5,10 +5,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'bootstrap/dist/js/bootstrap.min.js';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware  } from 'redux';
+//import { Provider } from 'react-redux';
+//import { createStore, applyMiddleware  } from 'redux';
 // import { BrowserRouter } from 'react-router-dom';
-import AppReducers from './reducers';
+// import AppReducers from './reducers';
 // import thunk from 'redux-thunk';
 
 let initialState = {};
@@ -20,9 +20,9 @@ const appStore = createStore(
     );
 
 ReactDOM.render(
-    <Provider store={appStore}>
-        <App />
-    </Provider>,
+    //<Provider store={appStore}>
+        <App />,
+    //</Provider>,
     
 document.getElementById('app_root'));
 
