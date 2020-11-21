@@ -9,7 +9,7 @@ import { Layout } from './components/Layout';
 import { NavigationBar } from './components/NavigationBar';
 import { Footer } from './components/Footer';
 import { Jumbotron } from './components/Jumbotron';
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 class App extends Component {
