@@ -15,7 +15,7 @@ const app = express();
 //     proxy.web(req, res, options);
 //   });
 app.use('/proxy', proxy('http://10.99.0.49:50453'));
-app.all('/api', proxy('gateway.kkh.go.th:1003',{
+app.post('/api', proxy('gateway.kkh.go.th:1003',{
     https : true
 }));
   
