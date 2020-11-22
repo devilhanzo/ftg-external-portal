@@ -9,7 +9,7 @@ const app = express();
 
 app.post('/api/*', (req, res) => {
     const options = {
-      target: 'https://gateway.kkh.go.th:1003'
+      target: 'https://10.0.3.254:1003'
     };
     proxy.web(req, res, options);
   });
