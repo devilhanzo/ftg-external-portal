@@ -7,7 +7,7 @@ const proxy = httpProxy.createProxyServer({
   });
 const app = express();
 
-app.post('/api/*', (req, res) => {
+app.all('/api/*', (req, res) => {
     const options = {
       target: 'http://10.99.0.49:50453/'
     };
