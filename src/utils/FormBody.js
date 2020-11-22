@@ -2,7 +2,7 @@
  * @Author: puck.solo 
  * @Date: 2017-10-07 14:32:14 
  * @Last Modified by: puck.solo
- * @Last Modified time: 2020-11-04 22:06:26
+ * @Last Modified time: 2020-11-22 11:18:13
  */
 module.exports = (details) => {
     let formData = [];
