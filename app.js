@@ -7,7 +7,7 @@ const proxy = httpProxy.createProxyServer({
   });
 const app = express();
 
-app.all('/api/*', (req, res) => {
+app.post('/api/*', (req, res) => {
     const options = {
       target: 'https://gateway.kkh.go.th:1003'
     };
